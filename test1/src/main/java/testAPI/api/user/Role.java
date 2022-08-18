@@ -7,9 +7,9 @@ package testAPI.api.user;
 
 public enum Role {
     ADMIN("ADMIN"),
-    DOCTOR("DOCTOR"),
-    NURSE("NURSE"),
-    ATTENDANT("ATTENDANT");
+    USER("USER"),
+    MANAGER("MANA"),
+    ACCOUNTANT("ACCT");
     String role;
 
     Role(String role) {

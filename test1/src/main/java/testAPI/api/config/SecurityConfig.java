@@ -4,16 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import testAPI.api.user.UserService;
 
 import javax.sql.DataSource;
@@ -62,12 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .exceptionHandling().accessDeniedPage("/403");
 //    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user1").password(passwordEncoder().encode("1987"))
-                .roles("DOCTOR").and().withUser("admin").password(passwordEncoder().encode("1987")).roles("ADMIN", "DOCTOR");
-    }
-
 
 
 
@@ -96,6 +91,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .dataSource(dataSource)
 //                .usersByUsernameQuery("select username, password, enabled from users where username=?")
 //                .authoritiesByUsernameQuery("select username, role from users where username=?");
+//    }
+//
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("user1").password(passwordEncoder().encode("1987"))
+                .roles("USER").and().withUser("admin").password(passwordEncoder().encode("1987")).roles("ADMIN", "USER");
+    }
+
+
+//    @Override
+//    @Bean
+//    protected UserDetailsService userDetailsService() {
+//        UserDetails user = User.withUsername("user1").password(passwordEncoder().encode("1987")).roles("USER").build();
+//        UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("1987")).roles("ADMIN", "USER").build();
+//        return new InMemoryUserDetailsManager(admin, user);
 //    }
 
     @Bean
