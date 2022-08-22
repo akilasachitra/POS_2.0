@@ -1,0 +1,12 @@
+services:
+  assessment-mysql-db:
+    image: 'mysql:latest'
+    container_name: 'MySQLTestDocker'
+    command: '--default-authentication-plugin=mysql_native_password'
+    environment:
+      MYSQL_DATABASE: 'testdb'
+      MYSQL_USER: 'test1'
+      MYSQL_PASSWORD: '19871231'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+    ports:
+      - '3306:3306'
