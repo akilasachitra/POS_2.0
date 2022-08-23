@@ -29,7 +29,7 @@ public class User {
     private String email;
 
    // @Size(min = 8, message = "Password should have at lease minimum 8 characters")
-    @JsonIgnore
+  //  @JsonIgnore
     private String password;
     private boolean active;
 

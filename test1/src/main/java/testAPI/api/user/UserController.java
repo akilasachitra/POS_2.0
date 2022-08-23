@@ -2,6 +2,7 @@ package testAPI.api.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -15,6 +16,8 @@ public class UserController {
 
 
     private final UserRepo userRepo;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserRepo userRepo) {
@@ -22,15 +25,17 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("ROLE_USER")
     List<User> helloWorld() {
         return userRepo.findAll();
     }
 
 
     @PostMapping("/saveUser")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("ROLE_ADMIN")
     public ResponseEntity<Object> saveProduct(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         User savedUser = userRepo.save(user);
         return ResponseEntity
                 .created(ServletUriComponentsBuilder
@@ -42,13 +47,13 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("ROLE_ADMIN")
     public void deleteByID(@PathVariable long id) {
         userRepo.deleteById(id);
     }
 
     @GetMapping("/users/{id}")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("ROLE_USER")
     public User getProduct(@PathVariable Long id) {
         Optional<User> byId = userRepo.findById(id);
         if (byId.isPresent())
@@ -56,6 +61,5 @@ public class UserController {
 
         throw new UserNotFoundException("User not found for id " + id);
     }
-
 
 }

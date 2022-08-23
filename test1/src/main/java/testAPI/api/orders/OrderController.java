@@ -32,12 +32,12 @@ public class OrderController {
         this.pharmacyRepo = pharmacyRepo;
     }
 
-    @GetMapping("/prescriptions")
+    @GetMapping("/orders")
     public List<Order> getOrders() {
         return orderRepo.findAll();
     }
 
-    @PostMapping("createPrescription/{userID}/")
+    @PostMapping("neworder/{userID}/")
     public ResponseEntity<Object> addOrder(@RequestBody Order order, @PathVariable long userID) {
         if (userID > 0) {
             Optional<User> byId = userRepo.findById(userID);
@@ -51,7 +51,7 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("addPharmacy/{userID}/")
+    @PostMapping("addproduct/{userID}/")
     public ResponseEntity<Object> addOrderLines(@RequestBody OrderLineDTO orderLineDTO, @PathVariable long userID) {
         if (userID > 0) {
             Optional<Order> existingOrderById = orderRepo.findById(orderLineDTO.getOrderID());
@@ -73,7 +73,7 @@ public class OrderController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND); // todo execption oder not found
     }
 
-    @PostMapping("addPharmacyWithPrescription/{userID}/")
+    @PostMapping("addorderwithproducts/{userID}/")
     public ResponseEntity<Object> addOrderWithProducts( @PathVariable long userID) {
         Order order =  new Order();
         if (userID > 0) {
