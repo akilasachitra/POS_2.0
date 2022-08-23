@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
     public Collection<? extends GrantedAuthority> getAuthorities(User user) {
         Set<GrantedAuthority> authorities = new HashSet<>();
         for (Role role : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getRole()));
         }
         return authorities;
     }

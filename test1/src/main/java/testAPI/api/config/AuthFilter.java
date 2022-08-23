@@ -1,3 +1,4 @@
+/*
 package testAPI.api.config;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,3 +24,4 @@ public class AuthFilter extends AbstractAuthenticationProcessingFilter {
         return null;
     }
 }
+*/

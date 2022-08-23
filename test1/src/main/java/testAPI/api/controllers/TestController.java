@@ -12,14 +12,14 @@ import java.util.Map;
 @RequestMapping("/test")
 public class TestController {
 
-    @GetMapping("/doctor")
-    @RolesAllowed("DOCTOR")
+    @GetMapping("/user")
+    @RolesAllowed("ROLE_USER")
     Map<String, String> helloWorld() {
         return Map.of("message", "Hi DOCTOR");
     }
 
     @GetMapping("/admin")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed("ROLE_ADMIN")
     Map<String, String> helloWorld2() {
         return Map.of("message", "Hi ADMIN");
     }
